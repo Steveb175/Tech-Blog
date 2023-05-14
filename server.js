@@ -20,22 +20,21 @@ const sess = {
 };
 
 // Set up handlebars as the view engine
-app.engine("handlebars", exphbs.engine);
 app.set("view engine", "handlebars");
+app.engine("handlebars", exphbs.create({ defaultLayout: "main" }).engine);
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sess));
 
 // Routes
 app.use(routes);
 
-// GET route for '/'
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
+// Start the server
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log("Now listening"));
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
 });

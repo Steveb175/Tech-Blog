@@ -1,12 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const { Post } = require("../../models");
-
 // Dashboard route
-router.get("/dashboard", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const posts = await Post.findAll();
-
     res.render("dashboard", { posts });
   } catch (error) {
     console.error(error);

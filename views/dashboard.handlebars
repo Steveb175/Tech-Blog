@@ -1,11 +1,12 @@
-{{#extends "layout"}}
+{{#extends "layout/main.handlebars"}}
 
 {{#content "title"}}Dashboard{{/content}}
 
 {{#content "body"}}
+{{#each posts as |post|}}
     <h1>Dashboard</h1>
     <ul>
-        {{#each posts}}
+        {{#each post}}
             <li>{{this.title}}</li>
         {{/each}}
     </ul>
