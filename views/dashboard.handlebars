@@ -6,4 +6,13 @@
         {{/each}}
     </ul>
 {{/each}}
-    <a href="/dashboard/create">Create New Post</a>
+<h2 id="new-post-heading">Create New Post:</h2>
+<div class="submit-form-container">
+  <form class="new-item-form">
+    <input id='post-title' type="text" name="post_title" placeholder="Post Title" required>
+    <textarea id='post-content' name="post_content" placeholder="Post Content" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script src="/js/item.js"></script>

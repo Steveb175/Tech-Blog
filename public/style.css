@@ -1,3 +1,4 @@
+/*Main start*/
 html, body, header, nav, ul, li, a {
     margin: 0;
     padding: 0;
@@ -31,3 +32,31 @@ nav ul li a:hover {
 main {
     margin: 20px;
 }
+
+h1 {
+    text-align: center;
+}
+/*Main end*/
+
+/*New Posts start*/
+.submit-form-container {
+  display: flex;
+  justify-content: center;
+}
+#new-post-heading {
+    text-align: center;
+}
+
+#post-title {
+    display: block;
+}
+#post-content {
+    display: block;
+    margin-top: 5px;
+    height: auto;
+    min-height: 100px;
+    min-width: 300px;
+    resize: vertical;
+    word-wrap: break-word;
+}
+/*New Posts end*/
