@@ -1,64 +1,90 @@
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
-const User = require("../../models/User");
+const { User } = require("../../models");
 
+// CREATE new user
 router.post("/", async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    console.log(req.body);
+    if (!req.body.username && !req.body.email && !req.body.password) {
+      res.status(400).json({
+        message: "Must provide username, email and password. Please try again!",
+      });
+    }
 
-    const userData = await User.create({
-      name: req.body.name,
+    if (req.body.password.length < 8) {
+      res.status(400).json({
+        message: "Minimum password length must be 8 . Please try again!",
+      });
+    }
+
+    if (req.body.password.length > 16) {
+      res
+        .status(400)
+        .json({ message: "Maximum password length is 16 . Please try again!" });
+    }
+    const dbUserData = await User.create({
+      username: req.body.username,
       email: req.body.email,
-      password: hashedPassword,
+      password: req.body.password,
     });
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
+      req.session.userId = dbUserData.dataValues.userId;
+      req.session.loggedIn = true;
 
-      res.status(200).json(userData);
+      res.status(200).json(dbUserData);
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 
+// Login
 router.post("/login", async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const dbUserData = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    });
 
-    if (!userData) {
+    if (!dbUserData) {
       res
         .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
+        .json({ message: "Incorrect email or password. Please try again!" });
       return;
     }
 
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      userData.password
-    );
+    const validPassword = await dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
+        .json({ message: "Incorrect email or password. Please try again!" });
       return;
     }
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
+      console.log(dbUserData);
+      console.log("THIS IS LINE 70");
+      console.log(dbUserData.dataValues.userId);
+      req.session.userId = dbUserData.dataValues.userId;
+      req.session.loggedIn = true;
 
-      res.json({ user: userData, message: "You are now logged in!" });
+      res
+        .status(200)
+        .json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 
+// Logout
 router.post("/logout", (req, res) => {
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
     });
