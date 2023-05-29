@@ -60,3 +60,30 @@ h1 {
     word-wrap: break-word;
 }
 /*New Posts end*/
+
+/* Login and Sign-up start */
+.login-signup-heading {
+    text-align: center;
+  }
+  
+  .login-signup-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  #username {
+    display: block;
+  }
+  
+  #password {
+    display: block;
+  }
+  
+  #email {
+    display: block;
+  }
+
+  #signup-msg {
+    text-align: center;
+  }
+  /* Login and Sign-up end */

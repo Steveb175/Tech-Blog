@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post } = require("../../models/Post");
+const { Post } = require("../../models");
 
 console.log("I AM POSTROUTES");
 

@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const sess = {
-  secret: "Super secret secret",
+  secret: "process.env.SECRET",
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -24,10 +24,10 @@ app.set("view engine", "handlebars");
 app.engine("handlebars", exphbs.create({ defaultLayout: "main" }).engine);
 
 // Middleware
+app.use(session(sess));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session(sess));
 
 // Routes
 app.use(routes);

@@ -2,6 +2,10 @@ const router = require("express").Router();
 const { Post } = require("../models");
 
 // Dashboard route
+router.get("/dashboard", (req, res) => {
+  res.render("dashboard");
+});
+
 router.get("/dashboard", async (req, res) => {
   try {
     const dbData = await Post.findAll({
@@ -18,4 +22,15 @@ router.get("/dashboard", async (req, res) => {
   }
 });
 
+router.get("/", (req, res) => {
+  res.render("home");
+});
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.get("/signup", (req, res) => {
+  res.render("signup");
+});
 module.exports = router;
