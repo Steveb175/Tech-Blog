@@ -1,8 +1,3 @@
-{{#extends "layout/main.handlebars"}}
-
-{{#content "title"}}Dashboard{{/content}}
-
-{{#content "body"}}
 {{#each posts as |post|}}
     <h1>Dashboard</h1>
     <ul>
@@ -11,4 +6,3 @@
         {{/each}}
     </ul>
     <a href="/dashboard/create">Create New Post</a>
-{{/content}}
