@@ -10,8 +10,8 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
-                {{#if loggedin}}
-                <li><a href="/logout">Logout</a></li>
+                {{#if loggedIn}}
+                <li><button id="logout">Logout</button></li>
                 {{else}}
                 <li><a href="/login">Login</a></li>
                 {{/if}}

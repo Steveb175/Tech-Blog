@@ -9,10 +9,10 @@ router.get("/", async (req, res) => {
       attributes: ["title"],
     });
     const posts = dbData.map((post) => post.get({ plain: true }));
-    console.log(posts);
+    console.log("POSTS", posts);
 
     // Render the home.handlebars template and pass the posts data
-    res.render("home", { posts });
+    res.render("home", { posts, loggedIn: req.session.loggedIn });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to retrieve blog posts" });
@@ -20,10 +20,6 @@ router.get("/", async (req, res) => {
 });
 
 // Dashboard route
-router.get("/dashboard", (req, res) => {
-  res.render("dashboard");
-});
-
 router.get("/dashboard", withAuth, async (req, res) => {
   try {
     const dbData = await Post.findAll({
