@@ -29,7 +29,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
     console.log(posts);
 
     // Render the dashboard.handlebars template and pass the posts data
-    res.render("dashboard", { posts });
+    res.render("dashboard", { posts, loggedIn: req.session.loggedIn });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to retrieve blog posts" });

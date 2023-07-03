@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const { Post } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 console.log("I AM POSTROUTES");
 
-router.post("/", async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   console.log("I AM POSTING");
   console.log(req.body);
 

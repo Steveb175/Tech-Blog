@@ -36,6 +36,11 @@ main {
 h1 {
     text-align: center;
 }
+
+#no-posts {
+    text-align: center;
+} 
+
 /*Main end*/
 
 /*New Posts start*/
